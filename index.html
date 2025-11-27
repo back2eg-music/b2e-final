@@ -74,8 +74,59 @@ body.hide-secondary-cover .feature-secondary {
     .site-logo {
       width: 72px;
       height: 72px;
-      border: 1px solid var(--border);
+      background: transparent;
+      border: none;
+      background-image: url("logo.png");  background-size: contain;  background-repeat: no-repeat;  background-position: left center; }
+
+
+    /* INTRO OVERLAY */
+    #intro-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: #ffffff;
+      z-index: 999;
+      transition: opacity 0.7s ease;
+    }
+
+    #intro-overlay.intro-hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .intro-inner {
+      max-width: 600px;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .intro-image {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .intro-audio-controls {
+      margin-top: 8px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .intro-audio-button {
+      font-size: 20px;
+      line-height: 1;
+      padding: 4px 10px;
+      border: 1px solid #000000;
+      background: #ffffff;
+      cursor: pointer;
+      user-select: none;
     }
 
 
@@ -101,10 +152,14 @@ body.hide-secondary-cover .feature-secondary {
     }
 
     .feature {
-      border: 1px solid var(--border);
       padding: 8px;
       background: #ffffff;
     }
+    .feature[aria-label="featured"] {
+      transform: rotate(0.75deg);
+      transform-origin: top left;
+    }
+
 
     .feature-label {
       font-size: 10px;
@@ -132,9 +187,8 @@ body.hide-secondary-cover .feature-secondary {
     .feature-media video {
       width: 100%;
       height: 100%;
-      object-fit: contain; object-position: left top;
-      border: none;
-    }
+      object-fit: contain;
+      object-position: left top;
       border: none;
     }
 
@@ -163,9 +217,10 @@ body.hide-secondary-cover .feature-secondary {
     /* BLOG / LOG */
 
     .blog {
-      border: 1px solid var(--border);
       padding: 8px;
       background: #ffffff;
+      transform: rotate(-0.5deg);
+      transform-origin: top left;
     }
 
     .blog-header {
@@ -248,8 +303,6 @@ body.hide-secondary-cover .feature-secondary {
       object-fit: contain;
       object-position: left top;
       border: none;
-    } object-position: left top;
-      border: none;
     }
 
     .blog-extra-text {
@@ -266,12 +319,13 @@ body.hide-secondary-cover .feature-secondary {
     /* RIGHT COLUMN */
 
     .column-links {
-      border: 1px solid var(--border);
       padding: 8px;
       background: #ffffff;
       display: flex;
       flex-direction: column;
       gap: 16px;
+      transform: rotate(-0.75deg);
+      transform-origin: top left;
     }
 
     .about {
@@ -321,6 +375,16 @@ body.hide-secondary-cover .feature-secondary {
   </style>
 </head>
 <body class="hide-secondary-cover">
+<div id="intro-overlay">
+  <div class="intro-inner">
+    <img src="intro-cover.jpeg" alt="" class="intro-image" />
+    <div class="intro-audio-controls">
+      <button id="intro-sound-toggle" class="intro-audio-button">🔊</button>
+    </div>
+    <audio id="intro-audio" src="intro-audio.wav" loop></audio>
+  </div>
+</div>
+
 <main>
 
   <!-- header без названия проекта, только линия -->
@@ -516,9 +580,10 @@ body.hide-secondary-cover .feature-secondary {
   </footer>
 </main>
 
+
 <script>
-  // раскрытие / сворачивание апдейтов по клику
   document.addEventListener('DOMContentLoaded', function () {
+    // раскрытие / сворачивание апдейтов по клику
     var items = document.querySelectorAll('.blog-item');
     items.forEach(function (item) {
       item.addEventListener('click', function (event) {
@@ -527,41 +592,79 @@ body.hide-secondary-cover .feature-secondary {
       });
     });
 
-    // mute toggle для вторичного медиаблока
+    // mute toggle для вторичного медиаблока (secondary feature под правым блоком)
     var muteBtn = document.querySelector('.mute-toggle');
-    var video = document.querySelector('.feature-secondary video');
-    if (muteBtn && video) {
+    var secondaryVideo = document.querySelector('.feature-secondary video');
+    if (muteBtn && secondaryVideo) {
       muteBtn.addEventListener('click', function (event) {
         event.stopPropagation();
-        video.muted = !video.muted;
-        muteBtn.textContent = video.muted ? '◎◎' : '◉◉';
+        secondaryVideo.muted = !secondaryVideo.muted;
+        muteBtn.textContent = secondaryVideo.muted ? '◎◎' : '◉◉';
       });
     }
 
-        // FEATURED VIDEO SOUND CONTROLS
+    // FEATURED VIDEO SOUND CONTROLS (streaming now)
     var featuredVideo = document.getElementById('featured-video');
     var soundOffBtn = document.getElementById('featured-sound-off');
     var soundOnBtn  = document.getElementById('featured-sound-on');
 
     if (featuredVideo && soundOffBtn && soundOnBtn) {
-      
-      // выключение звука
       soundOffBtn.addEventListener('click', function () {
         featuredVideo.muted = true;
         featuredVideo.volume = 0;
-        featuredVideo.play().catch(() => {});
+        featuredVideo.play().catch(function () {});
       });
 
-      // включение звука
       soundOnBtn.addEventListener('click', function () {
         featuredVideo.muted = false;
         featuredVideo.volume = 1.0;
+        featuredVideo.play().catch(function () {});
+      });
+    }
 
-        featuredVideo.play().catch(() => {});
+    // INTRO OVERLAY LOGIC
+    var intro = document.getElementById('intro-overlay');
+    var introAudio = document.getElementById('intro-audio');
+    var introToggle = document.getElementById('intro-sound-toggle');
+
+    if (intro && introAudio && introToggle) {
+    var logo = document.querySelector('.site-logo');
+    if (logo) {
+      logo.style.cursor = 'pointer';
+      logo.addEventListener('click', function () {
+        intro.classList.remove('intro-hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (introAudio.paused) {
+          introAudio.play().catch(function () {});
+          if (introToggle) introToggle.textContent = '🔇';
+        }
+      });
+    }
+
+      introToggle.addEventListener('click', function (event) {
+        event.stopPropagation();
+        if (introAudio.paused) {
+          introAudio.play().catch(function () {});
+          introToggle.textContent = '🔇';
+        } else {
+          introAudio.pause();
+          introToggle.textContent = '🔊';
+        }
+      });
+
+      function hideIntro() {
+        intro.classList.add('intro-hidden');
+      }
+
+      window.addEventListener('scroll', function () {
+        if (window.scrollY > 10) {
+          hideIntro();
+        }
       });
     }
   });
 </script>
 
-</body class="hide-secondary-cover">
+
+</body>
 </html>
