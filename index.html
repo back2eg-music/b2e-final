@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>B2E</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #FFFFFF;
+      --fg: #111111;
+      --muted: #777777;
+      --border: #B3B3B3;
+      --show-secondary-cover: no; /* yes = показать, no = скрыть */
+}
+.featured-audio-controls {
+  margin-top: 6px;
+  display: flex;
+  gap: 10px;
+}
+
+.featured-audio-button {
+  font-size: 18px;
+  line-height: 1;
+  padding: 3px 8px;
+  border: 1px solid var(--fg);
+  background: #ffffff;
+  cursor: pointer;
+  user-select: none;
+}
+/* toggle secondary cover via body class */
+body.hide-secondary-cover .feature-secondary {
+    display: none;
+}
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 14px;
+      line-height: 1.4;
+      background: var(--bg);
+      color: var(--fg);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+
+    a:hover {
+      text-decoration-style: dashed;
+    }
+
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 16px 16px 64px;
+    }
+
+    header {
+      padding-bottom: 4px;
+      margin-bottom: 12px;
+      min-height: 8px;
+    }
+
+    .site-logo {
+      width: 72px;
+      height: 72px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+    }
+
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 800px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* LEFT COLUMN */
+
+    .column-main {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .feature {
+      border: 1px solid var(--border);
+      padding: 8px;
+      background: #ffffff;
+    }
+
+    .feature-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+    }
+
+    .feature-media {
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      overflow: hidden;
+      background: transparent;
+    }
+    /* square media only for secondary block in right column */
+    .feature-secondary .feature-media {
+      aspect-ratio: 1 / 1;
+    }
+    .feature-media img,
+    .feature-media iframe,
+    .feature-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; object-position: left top;
+      border: none;
+    }
+      border: none;
+    }
+
+    .feature-caption {
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .feature-secondary {
+      margin-top: 8px;
+    }
+
+    .mute-toggle {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      padding: 2px 4px;
+      font-size: 11px;
+      border: 1px solid var(--fg);
+      background: #ffffff;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* BLOG / LOG */
+
+    .blog {
+      border: 1px solid var(--border);
+      padding: 8px;
+      background: #ffffff;
+    }
+
+    .blog-header {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+    }
+
+    .blog-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .blog-item {
+      border-top: 1px solid var(--border);
+      padding: 6px 0;
+      cursor: pointer;
+    }
+
+    .blog-item:first-of-type {
+      border-top: none;
+    }
+
+    .blog-summary {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .blog-meta {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .blog-title {
+      font-size: 13px;
+    }
+
+    .blog-text {
+      font-size: 12px;
+      color: #333333;
+    }
+
+    .blog-item.open {
+      background: #f0f0f0;
+    }
+
+    .blog-extra {
+      display: none;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed var(--border);
+      font-size: 12px;
+    }
+
+    .blog-item.open .blog-extra {
+      display: block;
+    }
+
+    .blog-media {
+      margin-bottom: 6px;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      overflow: hidden;
+      background: transparent;
+    }
+
+
+    .blog-media img,
+    .blog-media iframe,
+    .blog-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: left top;
+      border: none;
+    } object-position: left top;
+      border: none;
+    }
+
+    .blog-extra-text {
+      color: #333333;
+    }
+
+    .blog-hint {
+      margin-top: 6px;
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* RIGHT COLUMN */
+
+    .column-links {
+      border: 1px solid var(--border);
+      padding: 8px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .about {
+      font-size: 12px;
+      color: #222222;
+    }
+
+    .about p {
+      margin: 0 0 8px;
+    }
+
+    .link-group {
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+      font-size: 12px;
+    }
+
+    .link-group-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      color: #333333;
+    }
+
+    .link-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .link-list li {
+      padding: 2px 0;
+    }
+
+    footer {
+      margin-top: 24px;
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body class="hide-secondary-cover">
+<main>
+
+  <!-- header без названия проекта, только линия -->
+  <header><div class="site-logo"></div></header>
+
+  <section class="layout">
+    <!-- LEFT COLUMN -->
+    <div class="column-main">
+      <!-- FEATURE FRAME (общий превью-блок) -->
+    <section class="blog" aria-label="log">
+        <div class="blog-header">shows / updates</div>
+
+        <div class="blog-list">
+
+          <!-- BLOG ITEM 1 (с медиа) -->
+          <article class="blog-item" data-item="1">
+            <div class="blog-summary">
+              <div class="blog-meta">2025-08-17 · live</div>
+              <div class="blog-title">Show in Brussels / upcoming event and Bring our Own (iced) Latte </div>
+              <div class="blog-text">on Sunday June 29th at Chaussée de Vleurgat 67, 1050 Ixelles from 5 to 7:30 pm</div>
+            </div>
+            <div class="blog-extra">
+              <div class="blog-media">
+                <img src="Bring Your Own (iced) Latte.JPG" alt="Bring Your Own (iced) Latte" />
+              </div>
+              <div class="blog-extra-text">
+                 <a href="https://www.instagram.com/p/DK9gCMRNf8A/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank">link</a>, 
+              </div>
+            </div>
+          </article>
+
+          <!-- BLOG ITEM 2 (с медиа) -->
+          <article class="blog-item" data-item="2">
+            <div class="blog-summary">
+              <div class="blog-meta">2025-08-15 · live</div>
+              <div class="blog-title"> live in Berlin on xponelive03 🎶 27/06</div>
+              <div class="blog-text"> Third event by <a href="https://xpone.xyz/" target="_blank">xpone</a> at Studio.dB Berlin. Presenting live acts by: Vanessa Amara, Ity, B2E and dj sets from: Aeriform, Mark Dartau 
+</div>
+            </div>
+            <div class="blog-extra">
+              <div class="blog-media">
+                <img src="xpone03.png" alt="xpone03" />
+              </div>
+              <div class="blog-extra-text">
+                <a href="https://ra.co/events/2193255" target="_blank">link</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- BLOG ITEM 3 (без медиа, только текст) -->
+          <article class="blog-item" data-item="3">
+            <div class="blog-summary">
+              <div class="blog-meta">2025-01-22 · release</div>
+              <div class="blog-title">B2E’s second double-single "It Will Kiss Us As It Bites" is out on all platforms</div>
+              <div class="blog-text">
+              </div>
+                </div>
+            <div class="blog-extra">
+              <div class="blog-media">
+                <img src="All It Kiss Us.webp" alt="All It Kiss Us" />
+              </div>
+            </div>
+            <div class="blog-extra">
+              <div class="blog-extra-text">
+                  <a href="https://tr.ee/oh71yeUOg3" target="_blank"> LISTEN,</a>, 
+              <a href="https://goldenhorns.bandcamp.com/album/b2e-it-will-kiss-us-as-it-bites" target="_blank">BUY</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- BLOG ITEM 4 (без медиа, только текст) -->
+          <article class="blog-item" data-item="3">
+            <div class="blog-summary">
+              <div class="blog-meta">2024-03-25 · release</div>
+              <div class="blog-title">B2E – Circled. The debut single is out.</div>
+              <div class="blog-text">
+              </div>
+                </div>
+            <div class="blog-extra">
+              <div class="blog-media">
+                <img src="Single Circled.png" alt="Circled" />
+              </div>
+            </div>
+            <div class="blog-extra">
+              <div class="blog-extra-text">
+                  <a href="https://tr.ee/EbgaQyh6sx" target="_blank"> LISTEN,</a>, 
+              <a href="https://goldenhorns.bandcamp.com/track/b2e-circled" target="_blank">BUY</a>
+                 <p>
+          Artwork by <a href="https://polyhedron.store/shop" target="_blank">Polyhedron.</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="blog-hint">
+          click on an update to expand / collapse
+        </div>
+      </section>
+<section class="feature" aria-label="featured">
+  <div class="feature-label">streaming now / This city has brought me to the table (FREESTYLE)</div>
+
+  <div class="feature-media">
+    <video 
+    id="featured-video"
+    src="session.mp4"
+      muted
+      autoplay
+      loop
+      playsinline
+    ></video>
+  </div>
+
+<div class="featured-audio-controls">
+  <button 
+    type="button" 
+    class="featured-audio-button" 
+    id="featured-sound-off"
+  >🔇</button>
+
+  <button 
+    type="button" 
+    class="featured-audio-button" 
+    id="featured-sound-on"
+  >🔊</button>
+</div>
+
+  <div class="feature-caption">
+    Improvised studio fragments / Freestyle poetry notes · Nov 2025
+  </div>
+</section>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <aside class="column-links">
+
+
+
+      <section class="about" aria-label="listen">
+        <div class="link-group-title">listen</div>
+        <ul class="link-list">
+          <li><a href="#" target="https://goldenhorns.bandcamp.com/community" rel="noopener noreferrer">bandcamp</a></li>
+          <li><a href="#" target="https://www.ninaprotocol.com/profiles/golden-horns" rel="noopener noreferrer">nina</a></li>
+          <li><a href="#" target="https://soundcloud.com/b2e-420356878" rel="noopener noreferrer">soundcloud</a></li>
+          <li><a href="#" target="https://open.spotify.com/artist/2qyyT4QI6j3WHkKBeuJuuS?si=P3DI_I8WQD2MCZRXXQLWYQ" rel="noopener noreferrer">spotify</a></li>
+          <li><a href="#" target="https://music.apple.com/fr/artist/b2e/1789419693" rel="noopener noreferrer">apple music</a></li>
+        </ul>
+      </section>
+
+      <section class="link-group" aria-label="watch">
+        <div class="link-group-title">watch</div>
+        <ul class="link-list">
+          <li><a href="#" target="https://youtu.be/iC40xuLCC9E?si=gP5P2Pz0AZ-2Ve_G" rel="noopener noreferrer">B2E – ALL IT KISSES</a></li>
+        </ul>
+      </section>
+
+      <section class="link-group" aria-label="social">
+        <div class="link-group-title">social</div>
+        <ul class="link-list">
+          <li><a href="#" target="https://www.ninaprotocol.com/profiles/golden-horns" rel="noopener noreferrer">instagram</a></li>
+        </ul>
+      </section>
+
+      <section class="link-group" aria-label="contact">
+        <div class="link-group-title">contact</div>
+        <ul class="link-list">
+          <li><a href="mailto:back2eggg@gmail.com">back2eggg@gmail.com</a></li>
+        </ul>
+      </section>
+
+            <section class="link-group">
+        <p>
+          The egg has cracked, and the song was born in a tiny Paris apartment..  
+        </p>
+      </section>
+
+      <!-- SECONDARY FEATURE MEDIA BLOCK (под правым блоком) -->
+      <section class="feature feature-secondary" aria-label="secondary media">
+        <div class="feature-media">
+          <!-- сейчас просто картинка-плейсхолдер.
+               позже можно заменить на <video muted playsinline loop></video> -->
+          <img src="featured.jpeg" alt="featured media" />
+          <button class="mute-toggle" type="button" aria-label="toggle sound">◎◎</button>
+        </div>
+      </section>
+
+    </aside>
+  </section>
+
+  <footer>
+    <span>B2E</span>
+    <span>© Back2Egg</span>
+  </footer>
+</main>
+
+<script>
+  // раскрытие / сворачивание апдейтов по клику
+  document.addEventListener('DOMContentLoaded', function () {
+    var items = document.querySelectorAll('.blog-item');
+    items.forEach(function (item) {
+      item.addEventListener('click', function (event) {
+        if (event.target.closest('a')) return;
+        item.classList.toggle('open');
+      });
+    });
+
+    // mute toggle для вторичного медиаблока
+    var muteBtn = document.querySelector('.mute-toggle');
+    var video = document.querySelector('.feature-secondary video');
+    if (muteBtn && video) {
+      muteBtn.addEventListener('click', function (event) {
+        event.stopPropagation();
+        video.muted = !video.muted;
+        muteBtn.textContent = video.muted ? '◎◎' : '◉◉';
+      });
+    }
+
+        // FEATURED VIDEO SOUND CONTROLS
+    var featuredVideo = document.getElementById('featured-video');
+    var soundOffBtn = document.getElementById('featured-sound-off');
+    var soundOnBtn  = document.getElementById('featured-sound-on');
+
+    if (featuredVideo && soundOffBtn && soundOnBtn) {
+      
+      // выключение звука
+      soundOffBtn.addEventListener('click', function () {
+        featuredVideo.muted = true;
+        featuredVideo.volume = 0;
+        featuredVideo.play().catch(() => {});
+      });
+
+      // включение звука
+      soundOnBtn.addEventListener('click', function () {
+        featuredVideo.muted = false;
+        featuredVideo.volume = 1.0;
+
+        featuredVideo.play().catch(() => {});
+      });
+    }
+  });
+</script>
+
+</body class="hide-secondary-cover">
+</html>
