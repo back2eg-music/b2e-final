@@ -194,9 +194,13 @@ body.hide-secondary-cover .feature-secondary {
 
     .feature-caption {
       margin-top: 8px;
-      font-size: 11px;
-      color: var(--muted);
+      font-size: 15px;
+       color: var(--muted)
     }
+    .feature-text {
+  font-size: 16px;
+  line-height: 1.45;
+}
 
     .feature-secondary {
       margin-top: 8px;
@@ -372,7 +376,52 @@ body.hide-secondary-cover .feature-secondary {
       gap: 8px;
       flex-wrap: wrap;
     }
+    @media (max-width: 768px) {
+  .layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .column-links {
+    order: 1; /* становится первым */
+  }
+
+  .column-main {
+    order: 2; /* становится вторым */
+  }
+}
+    /* контейнер для видео + оверлей */
+.feature-media {
+  position: relative;
+  overflow: hidden; /* обрезает блюр по краям, чтобы рамка оставалась чёткой */
+}
+
+/* само видео */
+.feature-media video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* слой поверх видео с блюром */
+.feature-overlay {
+  position: absolute;
+  inset: 0;           /* top:0; right:0; bottom:0; left:0; */
+  pointer-events: none; /* чтобы клики проходили к кнопкам под ним, если они есть */
+  backdrop-filter: blur(4px); /* сила блюра – можешь менять 3/4/6px */
+}
+    
+
+/* логотип в углу поверх блюра */
+.feature-overlay-logo {
+  position: absolute;
+  bottom: 8px;  
+  right: 8px;   
+  width: 10px;
+  height: 10px;
+}
   </style>
+  
 </head>
 <body class="hide-secondary-cover">
 <div id="intro-overlay">
@@ -483,6 +532,7 @@ body.hide-secondary-cover .feature-secondary {
         <div class="blog-hint">
           click on an update to expand / collapse
         </div>
+      
       </section>
 <section class="feature" aria-label="featured">
   <div class="feature-label">streaming now / This city has brought me to the table (FREESTYLE)</div>
@@ -496,6 +546,9 @@ body.hide-secondary-cover .feature-secondary {
       loop
       playsinline
     ></video>
+    <div class="feature-overlay">
+      <img src="big stroke.png" alt="B2E logo" class="feature-overlay-logo">
+    </div>
   </div>
 
 <div class="featured-audio-controls">
@@ -513,7 +566,7 @@ body.hide-secondary-cover .feature-secondary {
 </div>
 
   <div class="feature-caption">
-    Improvised studio fragments / Freestyle poetry notes · Nov 2025
+    Improvised studio fragments / Freestyle poetry notes · Nov 2025<br>
   </div>
 </section>
     </div>
@@ -526,11 +579,45 @@ body.hide-secondary-cover .feature-secondary {
       <section class="about" aria-label="listen">
         <div class="link-group-title">listen</div>
         <ul class="link-list">
-          <li><a href="#" target="https://goldenhorns.bandcamp.com/community" rel="noopener noreferrer">bandcamp</a></li>
-          <li><a href="#" target="https://www.ninaprotocol.com/profiles/golden-horns" rel="noopener noreferrer">nina</a></li>
-          <li><a href="#" target="https://soundcloud.com/b2e-420356878" rel="noopener noreferrer">soundcloud</a></li>
-          <li><a href="#" target="https://open.spotify.com/artist/2qyyT4QI6j3WHkKBeuJuuS?si=P3DI_I8WQD2MCZRXXQLWYQ" rel="noopener noreferrer">spotify</a></li>
-          <li><a href="#" target="https://music.apple.com/fr/artist/b2e/1789419693" rel="noopener noreferrer">apple music</a></li>
+<li>
+  <a href="https://goldenhorns.bandcamp.com/community"
+     target="_blank"
+     rel="noopener noreferrer">
+    BANDCAMP
+  </a>
+</li>
+
+<li>
+  <a href="https://www.ninaprotocol.com/profiles/golden-horns"
+     target="_blank"
+     rel="noopener noreferrer">
+    NINA
+  </a>
+</li>
+
+<li>
+  <a href="https://soundcloud.com/b2e-420356878"
+     target="_blank"
+     rel="noopener noreferrer">
+    SOUNDCLOUD
+  </a>
+</li>
+
+<li>
+  <a href="https://open.spotify.com/artist/2qyyT4QI6j3WHkKBeuJuuS?si=P3DI_I8WQD2MCZRXXQLWYQ"
+     target="_blank"
+     rel="noopener noreferrer">
+    SPOTIFY
+  </a>
+</li>
+
+<li>
+  <a href="https://music.apple.com/fr/artist/b2e/1789419693"
+     target="_blank"
+     rel="noopener noreferrer">
+    APPLE MUSIC
+  </a>
+</li>
         </ul>
       </section>
 
