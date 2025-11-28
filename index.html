@@ -372,6 +372,20 @@ body.hide-secondary-cover .feature-secondary {
       gap: 8px;
       flex-wrap: wrap;
     }
+    @media (max-width: 768px) {
+  .layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .column-links {
+    order: 1; /* становится первым */
+  }
+
+  .column-main {
+    order: 2; /* становится вторым */
+  }
+}
   </style>
 </head>
 <body class="hide-secondary-cover">
