@@ -390,7 +390,38 @@ body.hide-secondary-cover .feature-secondary {
     order: 2; /* становится вторым */
   }
 }
+    /* контейнер для видео + оверлей */
+.feature-media {
+  position: relative;
+  overflow: hidden; /* обрезает блюр по краям, чтобы рамка оставалась чёткой */
+}
+
+/* само видео */
+.feature-media video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* слой поверх видео с блюром */
+.feature-overlay {
+  position: absolute;
+  inset: 0;           /* top:0; right:0; bottom:0; left:0; */
+  pointer-events: none; /* чтобы клики проходили к кнопкам под ним, если они есть */
+  backdrop-filter: blur(4px); /* сила блюра – можешь менять 3/4/6px */
+}
+    
+
+/* логотип в углу поверх блюра */
+.feature-overlay-logo {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 40px;   /* подгони размер под вкус: 32 / 48 / 56 */
+  height: auto;
+}
   </style>
+  
 </head>
 <body class="hide-secondary-cover">
 <div id="intro-overlay">
@@ -501,6 +532,7 @@ body.hide-secondary-cover .feature-secondary {
         <div class="blog-hint">
           click on an update to expand / collapse
         </div>
+      
       </section>
 <section class="feature" aria-label="featured">
   <div class="feature-label">streaming now / This city has brought me to the table (FREESTYLE)</div>
@@ -514,6 +546,9 @@ body.hide-secondary-cover .feature-secondary {
       loop
       playsinline
     ></video>
+    <div class="feature-overlay">
+      <img src="logo-overlay.png" alt="B2E logo" class="feature-overlay-logo">
+    </div>
   </div>
 
 <div class="featured-audio-controls">
