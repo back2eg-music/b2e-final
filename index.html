@@ -420,7 +420,16 @@ body.hide-secondary-cover .feature-secondary {
   width: 10px;
   height: 10px;
 }
-
+    
+/* emergency: restore desktop grid */
+@media (min-width: 769px) {
+  .layout {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 48px !important;
+    align-items: start !important;
+  }
+}
   </style>
   
 </head>
