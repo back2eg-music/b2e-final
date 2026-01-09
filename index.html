@@ -763,6 +763,10 @@ section.feature[aria-label="featured"] {
           hideIntro();
         }
       });
+      // also hide intro on click/tap (if page has no scroll)
+intro.addEventListener('click', function () {
+  hideIntro();
+});
     }
   });
 </script>
