@@ -415,10 +415,20 @@ body.hide-secondary-cover .feature-secondary {
 /* логотип в углу поверх блюра */
 .feature-overlay-logo {
   position: absolute;
-  bottom: 8px;  
-  right: 8px;   
+  bottom: 0px;  
+  right: 0px;   
   width: 10px;
   height: 10px;
+}
+    
+/* emergency: restore desktop grid */
+@media (min-width: 769px) {
+  .layout {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 48px !important;
+    align-items: start !important;
+  }
 }
   </style>
   
@@ -498,7 +508,7 @@ body.hide-secondary-cover .feature-secondary {
             </div>
             <div class="blog-extra">
               <div class="blog-extra-text">
-                  <a href="https://tr.ee/oh71yeUOg3" target="_blank"> LISTEN,</a>, 
+                  <a href="https://tr.ee/oh71yeUOg3" target="_blank"> LISTEN</a>, 
               <a href="https://goldenhorns.bandcamp.com/album/b2e-it-will-kiss-us-as-it-bites" target="_blank">BUY</a>
               </div>
             </div>
@@ -519,7 +529,7 @@ body.hide-secondary-cover .feature-secondary {
             </div>
             <div class="blog-extra">
               <div class="blog-extra-text">
-                  <a href="https://tr.ee/EbgaQyh6sx" target="_blank"> LISTEN,</a>, 
+                  <a href="https://tr.ee/EbgaQyh6sx" target="_blank"> LISTEN</a>, 
               <a href="https://goldenhorns.bandcamp.com/track/b2e-circled" target="_blank">BUY</a>
                  <p>
           Artwork by <a href="https://polyhedron.store/shop" target="_blank">Polyhedron.</a>
@@ -533,10 +543,12 @@ body.hide-secondary-cover .feature-secondary {
           click on an update to expand / collapse
         </div>
       
+
       </section>
 <section class="feature" aria-label="featured">
-  <div class="feature-label">streaming now / This city has brought me to the table (FREESTYLE)</div>
+  <div class="feature-label">streaming now / Monthly updated </div>
 
+  <a href="https://youtu.be/jmAFicGI2FA" target="_blank" rel="noopener noreferrer">
   <div class="feature-media">
     <video 
     id="featured-video"
@@ -550,6 +562,7 @@ body.hide-secondary-cover .feature-secondary {
       <img src="vid logo.png" alt="B2E logo" class="feature-overlay-logo">
     </div>
   </div>
+</a>
 
 <div class="featured-audio-controls">
   <button 
@@ -566,11 +579,13 @@ body.hide-secondary-cover .feature-secondary {
 </div>
 
   <div class="feature-caption">
-    Improvised studio fragments / Freestyle poetry notes · Nov 2025<br>
+    This city has brought me to the table (FREESTYLE)  · Nov 2025 <br>
+    Improvised studio fragments / Freestyle poetry notes
   </div>
 </section>
     </div>
 
+      
     <!-- RIGHT COLUMN -->
     <aside class="column-links">
 
@@ -580,7 +595,7 @@ body.hide-secondary-cover .feature-secondary {
         <div class="link-group-title">listen</div>
         <ul class="link-list">
 <li>
-  <a href="https://goldenhorns.bandcamp.com/community"
+  <a href="https://back2egg.bandcamp.com/track/young-storyteller"
      target="_blank"
      rel="noopener noreferrer">
     BANDCAMP
@@ -588,18 +603,10 @@ body.hide-secondary-cover .feature-secondary {
 </li>
 
 <li>
-  <a href="https://www.ninaprotocol.com/profiles/golden-horns"
+  <a href="https://www.ninaprotocol.com/profiles/back2egg"
      target="_blank"
      rel="noopener noreferrer">
     NINA
-  </a>
-</li>
-
-<li>
-  <a href="https://soundcloud.com/b2e-420356878"
-     target="_blank"
-     rel="noopener noreferrer">
-    SOUNDCLOUD
   </a>
 </li>
 
@@ -609,7 +616,8 @@ body.hide-secondary-cover .feature-secondary {
      rel="noopener noreferrer">
     SPOTIFY
   </a>
-</li>
+</li>          
+
 
 <li>
   <a href="https://music.apple.com/fr/artist/b2e/1789419693"
@@ -618,20 +626,34 @@ body.hide-secondary-cover .feature-secondary {
     APPLE MUSIC
   </a>
 </li>
+          
+<li>
+  <a href="https://soundcloud.com/b2e-420356878"
+     target="_blank"
+     rel="noopener noreferrer">
+    SOUNDCLOUD
+  </a>
+</li>
+          
         </ul>
       </section>
 
-      <section class="link-group" aria-label="watch">
-        <div class="link-group-title">watch</div>
+      <section class="link-group" aria-label="monthly updated playlist">
+        <div class="link-group-title">playlist</div>
         <ul class="link-list">
-          <li><a href="#" target="https://youtu.be/iC40xuLCC9E?si=gP5P2Pz0AZ-2Ve_G" rel="noopener noreferrer">B2E – ALL IT KISSES</a></li>
+          <li><a href="https://open.spotify.com/playlist/3x9MTpYRwUalvGQYFxd04M?si=is8DjU6uQvypzTZLZx8HoQ" 
+                target="_blank" 
+                rel="noopener noreferrer">
+            TWO BY THE RIVER
+          </a>
+          </li>
         </ul>
       </section>
 
       <section class="link-group" aria-label="social">
         <div class="link-group-title">social</div>
         <ul class="link-list">
-          <li><a href="#" target="https://www.ninaprotocol.com/profiles/golden-horns" rel="noopener noreferrer">instagram</a></li>
+          <li><a href="https://www.instagram.com/back2eggg/" target="_blank" rel="noopener noreferrer">instagram</a></li>
         </ul>
       </section>
 
@@ -748,6 +770,10 @@ body.hide-secondary-cover .feature-secondary {
           hideIntro();
         }
       });
+      // also hide intro on click/tap (if page has no scroll)
+intro.addEventListener('click', function () {
+  hideIntro();
+});
     }
   });
 </script>
